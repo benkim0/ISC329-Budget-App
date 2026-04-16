@@ -29,27 +29,7 @@ def main():
     cursor = conn.cursor(dictionary=True)
 
     try:
-        categories = [
-            "Food",
-            "Rent",
-            "Utilities",
-            "Transportation",
-            "Entertainment",
-            "Healthcare",
-            "Insurance",
-            "Shopping",
-            "Education",
-            "Travel",
-            "Savings",
-            "Miscellaneous"
-        ]
-
-        category_ids = {}
-
-        for cat in categories:
-            cid = insert_categories(cursor, cat)
-            category_ids[cat] = cid
-
+        delete_transaction(cursor, 19)
         conn.commit()
 
     finally:
