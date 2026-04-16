@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 from connect import connect_to_sql
 from insert import insert_user, insert_transactions, insert_bank_accounts, insert_budget
-from delete import delete_transaction
+from delete import delete_transaction, delete_user, delete_bank_account, delete_budget
 
 def run_db(action, fetch=False):
     conn = connect_to_sql()
@@ -281,12 +281,12 @@ tk.Button(
 #DELETE TRANSACTION
 
 tk.Label(transaction_frame, text="Transaction ID").grid(row=7, column=0)
-delete_entry = tk.Entry(transaction_frame)
-delete_entry.grid(row=7, column=1)
+delete_tr_entry = tk.Entry(transaction_frame)
+delete_tr_entry.grid(row=7, column=1)
 
-def delete_transaction():
+def delete_tr():
     try:
-        transaction_id = int(delete_entry.get())
+        transaction_id = int(delete_tr_entry.get())
 
         conn = connect_to_sql()
         cursor = conn.cursor()
@@ -306,7 +306,7 @@ def delete_transaction():
 tk.Button(
     transaction_frame,
     text="Delete Transaction",
-    command=delete_transaction
+    command=delete_tr
 ).grid(row=8, column=0, columnspan=2, pady=5)
 
 # VIEW BALANCE
@@ -390,6 +390,95 @@ tk.Button(
     text="View Budget",
     command=view_budget
 ).grid(row=7, column=0, columnspan=2, pady=10)
+
+#DELETE USER
+
+tk.Label(user_frame, text="User ID").grid(row=7, column=0)
+delete_us_entry = tk.Entry(user_frame)
+delete_us_entry.grid(row=7, column=1)
+
+def delete_us():
+    try:
+        user_id = int(delete_us_entry.get())
+
+        conn = connect_to_sql()
+        cursor = conn.cursor()
+
+        try:
+            delete_user(cursor, user_id)
+            conn.commit()
+            messagebox.showinfo("Success", "User deleted")
+        finally:
+            cursor.close()
+            conn.close()
+
+    except Exception as e:
+        messagebox.showerror("Error", str(e))
+
+tk.Button(
+    user_frame,
+    text="Delete User",
+    command=delete_us
+).grid(row=8, column=0, columnspan=2, pady=5)
+
+#DELETE BANK ACCOUNT
+
+tk.Label(bank_account_frame, text="Bank Account ID").grid(row=8, column=0)
+delete_ba_entry = tk.Entry(bank_account_frame)
+delete_ba_entry.grid(row=8, column=1)
+
+def delete_ba():
+    try:
+        bank_account_id = int(delete_ba_entry.get())
+
+        conn = connect_to_sql()
+        cursor = conn.cursor()
+
+        try:
+            delete_bank_account(cursor, bank_account_id)
+            conn.commit()
+            messagebox.showinfo("Success", "Bank Account deleted")
+        finally:
+            cursor.close()
+            conn.close()
+
+    except Exception as e:
+        messagebox.showerror("Error", str(e))
+
+tk.Button(
+    bank_account_frame,
+    text="Delete Bank Account",
+    command=delete_ba
+).grid(row=9, column=0, columnspan=2, pady=5)
+
+#DELETE BUDGET
+tk.Label(budget_frame, text="Budget ID (Delete)").grid(row=8, column=0)
+delete_bud_entry = tk.Entry(budget_frame)
+delete_bud_entry.grid(row=8, column=1)
+
+def delete_bud():
+    try:
+        budget_id = int(delete_bud_entry.get())
+
+        conn = connect_to_sql()
+        cursor = conn.cursor()
+
+        try:
+            delete_budget(cursor, budget_id)
+            conn.commit()
+            messagebox.showinfo("Success", "Budget deleted")
+        finally:
+            cursor.close()
+            conn.close()
+
+    except Exception as e:
+        messagebox.showerror("Error", str(e))
+
+tk.Button(
+    budget_frame,
+    text="Delete Budget",
+    command=delete_bud
+).grid(row=9, column=0, columnspan=2, pady=5)
 
 #RUN
 root.mainloop()
