@@ -1,3 +1,4 @@
+
 def delete_user(cursor, user_id):
     query = """
     DELETE FROM user
@@ -31,10 +32,12 @@ def delete_category(cursor, category_id):
     return cursor.rowcount
 
 def delete_transaction(cursor, transaction_id):
-    query = """
+    query ="""
     DELETE FROM transactions
-    WHERE transaction_id = %s
-    """
-    cursor.execute(query, (transaction_id,))
+    WHERE transaction_id=%s
+    AND account_id IN (
+        SELECT account_id FROM bank_accounts WHERE user_id=%s
+    )"""
+    cursor.execute(query, (transaction_id, current_user_id))
     return cursor.rowcount
 

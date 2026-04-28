@@ -29,7 +29,7 @@ def main():
     cursor = conn.cursor(dictionary=True)
 
     try:
-        delete_transaction(cursor, 19)
+        insert_categories(cursor, "Misc")
         conn.commit()
 
     finally:
