@@ -4,8 +4,8 @@ from mysql.connector import Error
 def connect_to_sql():
     try:
         connection = mysql.connector.connect(
-            host="shuttle.proxy.rlwy.net",
-            port=18649,
+            host="mysql.railway.internal",
+            port=3306,
             user="root",
             password="DaMOizkYDeMrZekwwoGDhqjFgCAVcUxD",
             database="railway"

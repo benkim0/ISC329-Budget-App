@@ -65,9 +65,3 @@ def insert_transactions(cursor, account_id, category_id, transaction_name, trans
 
     cursor.execute(query, (account_id, category_id, transaction_name, transaction_amount, transaction_date))
     return cursor.lastrowid
-
-
-
-
-
-

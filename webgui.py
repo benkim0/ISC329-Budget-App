@@ -24,10 +24,6 @@ def run_db(action):
         cursor.close()
         conn.close()
 
-@app.route("/debug")
-def debug():
-    return "Flask is alive"
-
 @app.route("/")
 def home():
     return redirect("/login")
@@ -164,7 +160,7 @@ def delete_transaction_route(transaction_id):
     cursor = conn.cursor()
 
     try:
-        delete_transaction(cursor, transaction_id)
+        delete_transaction(cursor, transaction_id, session["user_id"])
         conn.commit()
         flash("Transaction deleted")
 
