@@ -24,6 +24,9 @@ def run_db(action):
         cursor.close()
         conn.close()
 
+@app.route("/")
+def home():
+    return redirect("/login")
 @app.route("/dashboard")
 def dashboard():
     if "user_id" not in session:
