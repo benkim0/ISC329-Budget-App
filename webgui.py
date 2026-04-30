@@ -11,6 +11,8 @@ current_user_id = None
 
 def run_db(action):
     conn = connect_to_sql()
+    if conn is None:
+        return "DB error", 500
     cursor = conn.cursor(dictionary=True)
 
     try:
@@ -39,6 +41,8 @@ def login():
         email = request.form["email"]
         password = request.form["password"]
         conn = connect_to_sql()
+        if conn is None:
+            return "DB error", 500
         cursor = conn.cursor(dictionary=True)
         cursor.execute(
             "SELECT user_id FROM user WHERE email_address=%s AND password=%s",
@@ -58,8 +62,9 @@ def login():
 def signup():
     if request.method == "POST":
         conn = connect_to_sql()
+        if conn is None:
+            return "DB error", 500
         cursor = conn.cursor()
-
         try:
             user_id = insert_user(
                 cursor,
@@ -70,19 +75,15 @@ def signup():
                 request.form["dob"],
                 request.form["password"]
             )
-
             conn.commit()
             flash(f"User created with ID {user_id}")
             return redirect("/login")
-
         except Exception as e:
             flash(str(e))
             return redirect("/signup")
-
         finally:
             cursor.close()
             conn.close()
-
     return render_template("signup.html")
 
 #Transactions
@@ -97,6 +98,8 @@ def transactions():
         "amount": "t.transaction_amount DESC"
     }[sort]
     conn = connect_to_sql()
+    if conn is None:
+        return "DB error", 500
     cursor = conn.cursor(dictionary=True)
     cursor.execute(f"""
         SELECT t.transaction_id, t.transaction_date, t.transaction_name, t.transaction_amount
@@ -132,6 +135,8 @@ def add_transaction():
     if "user_id" not in session:
         return redirect("/login")
     conn = connect_to_sql()
+    if conn is None:
+        return "DB error", 500
     cursor = conn.cursor()
     try:
         insert_transactions(
@@ -155,22 +160,19 @@ def add_transaction():
 def delete_transaction_route(transaction_id):
     if "user_id" not in session:
         return redirect("/login")
-
     conn = connect_to_sql()
+    if conn is None:
+        return "DB error", 500
     cursor = conn.cursor()
-
     try:
         delete_transaction(cursor, transaction_id, session["user_id"])
         conn.commit()
         flash("Transaction deleted")
-
     except Exception as e:
         flash(str(e))
-
     finally:
         cursor.close()
         conn.close()
-
     return redirect("/transactions")
 
 @app.route("/accounts", methods=["GET"])
@@ -178,6 +180,8 @@ def accounts():
     if "user_id" not in session:
         return redirect("/login")
     conn = connect_to_sql()
+    if conn is None:
+        return "DB error", 500
     cursor = conn.cursor(dictionary=True)
     cursor.execute("""
         SELECT account_id, bank_name
@@ -210,6 +214,8 @@ def add_account():
     if "user_id" not in session:
         return redirect("/login")
     conn = connect_to_sql()
+    if conn is None:
+        return "DB error", 500
     cursor = conn.cursor()
     try:
         insert_bank_accounts(
@@ -234,6 +240,8 @@ def budgets():
     if "user_id" not in session:
         return redirect("/login")
     conn = connect_to_sql()
+    if conn is None:
+        return "DB error", 500
     cursor = conn.cursor(dictionary=True)
     cursor.execute("""
         SELECT b.budget_id, c.category_name, b.start_date, b.end_date
@@ -268,10 +276,10 @@ def budgets():
 def add_budget():
     if "user_id" not in session:
         return redirect("/login")
-
     conn = connect_to_sql()
+    if conn is None:
+        return "DB error", 500
     cursor = conn.cursor()
-
     try:
         insert_budget(
             cursor,
@@ -281,30 +289,25 @@ def add_budget():
             request.form["start_date"],
             request.form["end_date"]
         )
-
         conn.commit()
         flash("Budget created successfully!")
-
     except Exception as e:
         flash(str(e))
-
     finally:
         cursor.close()
         conn.close()
-
     return redirect("/budgets")
 
 @app.route("/users", methods=["GET", "POST"])
 def users():
     if "user_id" not in session:
         return redirect("/login")
-
     user_id = session["user_id"]
-
     if request.method == "POST":
         conn = connect_to_sql()
+        if conn is None:
+            return "DB error", 500
         cursor = conn.cursor()
-
         try:
             update_user(
                 cursor,
@@ -316,36 +319,29 @@ def users():
                 request.form.get("dob"),
                 request.form.get("password")
             )
-
             conn.commit()
             flash("User updated successfully")
             return redirect("/users")
-
         finally:
             cursor.close()
             conn.close()
-
     return render_template("user_settings.html")
 
 @app.route("/delete_user", methods=["POST"])
 def delete_account():
     if "user_id" not in session:
         return redirect("/login")
-
     user_id = session["user_id"]
-
     conn = connect_to_sql()
+    if conn is None:
+        return "DB error", 500
     cursor = conn.cursor()
-
     try:
         delete_user(cursor, user_id)
         conn.commit()
-
         session.clear()
         flash("Account deleted successfully")
-
         return redirect("/login")
-
     finally:
         cursor.close()
         conn.close()
