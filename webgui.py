@@ -24,6 +24,10 @@ def run_db(action):
         cursor.close()
         conn.close()
 
+@app.route("/debug")
+def debug():
+    return "Flask is alive"
+
 @app.route("/")
 def home():
     return redirect("/login")
