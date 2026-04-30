@@ -1,4 +1,6 @@
 from flask import Flask, render_template, request, redirect, session, flash
+from sympy.integrals.meijerint_doc import category
+
 from connect import connect_to_sql
 from insert import insert_user, insert_transactions, insert_bank_accounts, insert_budget
 from delete import delete_transaction, delete_user, delete_bank_account, delete_budget
@@ -262,6 +264,11 @@ def budgets():
         WHERE b.user_id = %s
     """, (session["user_id"],))
     budgets = cursor.fetchall()
+    cursor.execute("""
+        SELECT category_id, category_name
+        FROM categories
+    """)
+    categories = cursor.fetchall()
     budget_id = request.args.get("budget_id")
     budget_data = None
     if budget_id:
@@ -281,7 +288,8 @@ def budgets():
         "budgets.html",
         budgets=budgets,
         budget_data=budget_data,
-        selected_budget=budget_id
+        selected_budget=budget_id,
+        categories = categories
     )
 
 
