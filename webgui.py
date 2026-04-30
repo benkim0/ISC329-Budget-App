@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, redirect, session, flash
-from sympy.integrals.meijerint_doc import category
 
 from connect import connect_to_sql
 from insert import insert_user, insert_transactions, insert_bank_accounts, insert_budget
