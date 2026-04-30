@@ -3,6 +3,7 @@ from connect import connect_to_sql
 from insert import insert_user, insert_transactions, insert_bank_accounts, insert_budget
 from delete import delete_transaction, delete_user, delete_bank_account, delete_budget
 from update import update_user
+import os
 
 app = Flask(__name__)
 app.secret_key = "dev-key"
@@ -347,5 +348,9 @@ def delete_account():
         conn.close()
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", 5000)),
+        debug=False
+    )
 
