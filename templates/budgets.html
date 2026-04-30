@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Budgets</title>
+</head>
+<body>
+
+<h1>Budgets</h1>
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul>
+      {% for msg in messages %}
+        <li>{{ msg }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+<h2>Your Budgets</h2>
+
+<form method="GET" action="/budgets">
+
+    <label>Select Budget</label><br>
+
+    <select name="budget_id">
+        {% for b in budgets %}
+            <option value="{{ b.budget_id }}"
+                {% if selected_budget == b.budget_id|string %}selected{% endif %}>
+                {{ b.category_name }}
+                ({{ b.start_date }} → {{ b.end_date }})
+                | ID {{ b.budget_id }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <br><br>
+
+    <button type="submit">View Budget</button>
+
+</form>
+
+<hr>
+
+{% if budget_data %}
+
+    <h2>Budget Summary</h2>
+
+    <p><b>Target:</b> {{ budget_data.target_amount }}</p>
+    <p><b>Spent:</b> {{ budget_data.amount_spent }}</p>
+    <p><b>Remaining:</b> {{ budget_data.remaining_balance }}</p>
+
+{% endif %}
+
+<hr>
+
+<h2>Create Budget</h2>
+
+<form method="POST" action="/add_budget">
+
+    <label>Category</label><br>
+    <select name="category_id" required>
+        {% for c in categories %}
+            <option value="{{ c.category_id }}">
+                {{ c.category_name }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <br><br>
+
+    <label>Target Amount</label><br>
+    <input type="number" step="0.01" name="target_amount" required>
+
+    <br><br>
+
+    <label>Start Date</label><br>
+    <input type="date" name="start_date" required>
+
+    <br><br>
+
+    <label>End Date</label><br>
+    <input type="date" name="end_date" required>
+
+    <br><br>
+
+    <button type="submit">Create Budget</button>
+
+</form>
+
+<hr>
+
+</body>

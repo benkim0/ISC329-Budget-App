@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Account Settings</title>
+</head>
+<body>
+
+<h1>Account Settings</h1>
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul>
+      {% for msg in messages %}
+        <li>{{ msg }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+<hr>
+
+<h2>Update Profile</h2>
+
+<form method="POST" action="/update_user">
+
+    <label>First Name</label>
+    <input type="text" name="first_name">
+
+    <br>
+
+    <label>Last Name</label>
+    <input type="text" name="last_name">
+
+    <br>
+
+    <label>Email</label>
+    <input type="text" name="email_address">
+
+    <br>
+
+    <label>Phone Number</label>
+    <input type="text" name="phone_number">
+
+    <br>
+
+    <label>Date of Birth</label>
+    <input type="date" name="date_of_birth">
+
+    <br>
+
+    <label>Password</label>
+    <input type="password" name="password">
+
+    <br><br>
+
+    <button type="submit">Update Profile</button>
+</form>
+
+<hr>
+
+<h2 style="color:red;">Danger Zone</h2>
+
+<p>This will permanently delete your account and all data.</p>
+
+<form method="POST" action="/delete_account">
+    <button type="submit"
+            style="background-color:red;color:white;"
+            onclick="return confirm('Are you sure? This cannot be undone.')">
+        Delete My Account
+    </button>
+</form>
+
+</body>
+</html>

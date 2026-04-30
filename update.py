@@ -113,13 +113,4 @@ def update_transaction(cursor, transaction_id, transaction_name=None, transactio
     cursor.execute(query, tuple(values))
     return cursor.rowcount
 
-def update_category(cursor, category_id, category_name):
-    query = """
-    UPDATE categories
-    SET category_name = %s
-    WHERE category_id = %s
-    """
-
-    cursor.execute(query, (category_name, category_id))
-    return cursor.rowcount
 

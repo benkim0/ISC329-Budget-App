@@ -29,7 +29,7 @@ def main():
     cursor = conn.cursor(dictionary=True)
 
     try:
-        insert_categories(cursor, "Misc")
+        insert_categories(cursor, "Income")
         conn.commit()
 
     finally:

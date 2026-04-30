@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <h1>Sign Up</h1>
+
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul>
+      {% for msg in messages %}
+        <li>{{ msg }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  {% endwith %}
+
+  <form method="POST">
+      <label>First Name</label>
+      <input type="text" name="first_name">
+
+      <label>Last Name</label>
+      <input type="text" name="last_name">
+
+      <label>Email</label>
+      <input type="text" name="email">
+
+      <label>Phone</label>
+      <input type="text" name="phone">
+
+      <label>DOB (YYYY-MM-DD)</label>
+      <input type="text" name="dob">
+
+      <label>Password</label>
+      <input type="password" name="password">
+
+      <button type="submit">Create User</button>
+  </form>
+
+  <a href="/login">Back to login</a>
+</body>
+</html>
