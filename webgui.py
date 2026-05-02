@@ -64,6 +64,11 @@ def login():
         return redirect("/login")
     return render_template("login.html")
 
+@app.route("/Logout")
+def logout():
+    session.clear()
+    return redirect("/login")
+
 
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
