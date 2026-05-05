@@ -355,9 +355,9 @@ def users():
                 user_id,
                 request.form.get("first_name"),
                 request.form.get("last_name"),
-                request.form.get("email"),
-                request.form.get("phone"),
-                request.form.get("dob"),
+                request.form.get("email_address"),
+                request.form.get("phone_number"),
+                request.form.get("date_of_birth"),
                 request.form.get("password")
             )
             conn.commit()

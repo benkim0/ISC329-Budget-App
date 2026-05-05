@@ -4,25 +4,25 @@ def update_user(cursor, user_id, first_name=None, last_name=None, email_address=
     updates = []
     values = []
 
-    if first_name is not None:
+    if first_name:
         updates.append("first_name=%s")
         values.append(first_name)
-    if last_name is not None:
+    if last_name:
         updates.append("last_name=%s")
         values.append(last_name)
-    if email_address is not None:
+    if email_address:
         updates.append("email_address=%s")
         values.append(email_address)
-    if phone_number is not None:
+    if phone_number:
         updates.append("phone_number=%s")
         values.append(phone_number)
-    if date_of_birth is not None:
+    if date_of_birth:
         if isinstance(date_of_birth, str):
             year, month, day = map(int, date_of_birth.split('-'))
             date_of_birth = date(year, month, day)
         updates.append("date_of_birth=%s")
         values.append(date_of_birth)
-    if password is not None:
+    if password:
         updates.append("password=%s")
         values.append(password)
     if not updates:
