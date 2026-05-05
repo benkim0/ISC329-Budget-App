@@ -2,17 +2,90 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h1>Budget App</h1>
+    <title>Dashboard</title>
 
-    <ul>
-        <li><a href="/accounts">Accounts</a></li>
-        <li><a href="/transactions">Transactions</a></li>
-        <li><a href="/budgets">Budgets</a></li>
-        <li><a href="/users">User Settings</a></li>
-        <li><a href="/logout">Logout</a></li>
-    </ul>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background: #2563eb;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-3px);
+        }
+        a {
+            text-decoration: none;
+            color: #111827;
+            font-weight: bold;
+        }
+        .logout {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .logout a {
+            color: #ef4444;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>Budget App Dashboard</h1>
+</div>
+
+<div class="container">
+
+    <div class="grid">
+
+        <div class="card">
+            <a href="/accounts">💳 Accounts</a>
+        </div>
+
+        <div class="card">
+            <a href="/transactions">💸 Transactions</a>
+        </div>
+
+        <div class="card">
+            <a href="/budgets">📊 Budgets</a>
+        </div>
+
+        <div class="card">
+            <a href="/users">⚙️ User Settings</a>
+        </div>
+
+    </div>
+
+    <div class="logout">
+        <a href="/logout">Logout</a>
+    </div>
+
+</div>
+
 </body>
 </html>

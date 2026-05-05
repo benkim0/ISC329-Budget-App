@@ -1,78 +1,148 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Account Settings</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 700px;
+            margin: auto;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 6px;
+            background: #2563eb;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #1d4ed8;
+        }
+        .danger-card {
+            border: 1px solid #fecaca;
+            background: #fef2f2;
+        }
+        .danger-btn {
+            background: #ef4444;
+        }
+        .danger-btn:hover {
+            background: #dc2626;
+        }
+        .flash {
+            background: #fef2f2;
+            color: #991b1b;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+        .back {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .back a {
+            text-decoration: none;
+            color: #2563eb;
+        }
+    </style>
 </head>
+
 <body>
 
-<h1>Account Settings</h1>
+<div class="container">
 
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <ul>
-      {% for msg in messages %}
-        <li>{{ msg }}</li>
-      {% endfor %}
-    </ul>
-  {% endif %}
-{% endwith %}
+    <h1>Account Settings</h1>
 
-<hr>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="flash">
+          {% for msg in messages %}
+            <div>{{ msg }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
 
-<h2>Update Profile</h2>
+    <!-- UPDATE PROFILE -->
+    <div class="card">
+        <h2>Update Profile</h2>
 
-<form method="POST" action="/update_user">
+        <form method="POST" action="/update_user">
 
-    <label>First Name</label>
-    <input type="text" name="first_name">
+            <label>First Name</label>
+            <input type="text" name="first_name">
 
-    <br>
+            <label>Last Name</label>
+            <input type="text" name="last_name">
 
-    <label>Last Name</label>
-    <input type="text" name="last_name">
+            <label>Email</label>
+            <input type="text" name="email_address">
 
-    <br>
+            <label>Phone Number</label>
+            <input type="text" name="phone_number">
 
-    <label>Email</label>
-    <input type="text" name="email_address">
+            <label>Date of Birth</label>
+            <input type="date" name="date_of_birth">
 
-    <br>
+            <label>Password</label>
+            <input type="password" name="password">
 
-    <label>Phone Number</label>
-    <input type="text" name="phone_number">
+            <button type="submit">Update Profile</button>
+        </form>
+    </div>
 
-    <br>
+    <!-- DELETE ACCOUNT -->
+    <div class="card danger-card">
+        <h2>Danger Zone</h2>
 
-    <label>Date of Birth</label>
-    <input type="date" name="date_of_birth">
+        <p style="text-align:center;">
+            This will permanently delete your account and all data.
+        </p>
 
-    <br>
+        <form method="POST" action="/delete_account">
+            <button class="danger-btn"
+                    onclick="return confirm('Are you sure? This cannot be undone.')">
+                Delete My Account
+            </button>
+        </form>
+    </div>
 
-    <label>Password</label>
-    <input type="password" name="password">
+    <div class="back">
+        <a href="/dashboard">← Return to Dashboard</a>
+    </div>
 
-    <br><br>
-
-    <button type="submit">Update Profile</button>
-</form>
-
-<hr>
-
-<a href="/dashboard">
-    <button>Return to Dashboard</button>
-</a>
-
-<h2 style="color:red;">Danger!!!!!!!</h2>
-
-<p>This will permanently delete your account and all data.</p>
-
-<form method="POST" action="/delete_account">
-    <button type="submit"
-            style="background-color:red;color:white;"
-            onclick="return confirm('Are you sure? This cannot be undone.')">
-        Delete My Account
-    </button>
-</form>
+</div>
 
 </body>
 </html>
