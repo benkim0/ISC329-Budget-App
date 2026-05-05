@@ -102,9 +102,9 @@
         <td>{{ t.transaction_name }}</td>
         <td>{{ t.transaction_amount }}</td>
         <td>
-            <a href="/delete_transaction/{{ t.transaction_id }}", methods="POST", style="display:inline;">
-                Delete
-            </a>
+    <form action="/delete_transaction/{{ t.transaction_id }}" method="POST" style="display:inline;">
+        <button type="submit">Delete</button>
+    </form>
         </td>
     </tr>
     {% endfor %}
