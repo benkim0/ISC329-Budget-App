@@ -180,7 +180,22 @@ def delete_transaction_route(transaction_id):
         return "DB error", 500
     cursor = conn.cursor()
     try:
+        cursor.execute("""
+            SELECT t.transaction_amount, t.account_id
+            FROM transactions t
+            JOIN bank_accounts b ON t.account_id = b.account_id
+            WHERE t.transaction_id = %s
+            AND b.user_id = %s
+        """, (transaction_id, session["user_id"]))
+        tx = cursor.fetchone()
+        amount = tx["transaction_amount"]
+        account_id = tx["account_id"]
         delete_transaction(cursor, transaction_id, session["user_id"])
+        cursor.execute("""
+            UPDATE bank_accounts
+            SET current_balance = current_balance + %s
+            WHERE account_id = %s
+        """, (amount, account_id))
         conn.commit()
         flash("Transaction deleted")
     except Exception as e:
