@@ -178,7 +178,7 @@ def delete_transaction_route(transaction_id):
     conn = connect_to_sql()
     if conn is None:
         return "DB error", 500
-    cursor = conn.cursor()
+    cursor = conn.cursor(dictionary=True)
     try:
         cursor.execute("""
             SELECT t.transaction_amount, t.account_id
@@ -248,7 +248,7 @@ def add_account():
     conn = connect_to_sql()
     if conn is None:
         return "DB error", 500
-    cursor = conn.cursor()
+    cursor = conn.cursor(dictionary=True)
     try:
         insert_bank_accounts(
             cursor,
