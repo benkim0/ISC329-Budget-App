@@ -102,7 +102,7 @@
         <td>{{ t.transaction_name }}</td>
         <td>{{ t.transaction_amount }}</td>
         <td>
-            <a href="/delete_transaction/{{ t.transaction_id }}">
+            <a href="/delete_transaction/{{ t.transaction_id }}", methods="POST", style="display:inline;">
                 Delete
             </a>
         </td>
@@ -112,7 +112,7 @@
 </table>
 
 <a href="/dashboard">
-    <button>Return</button>
+    <button>Return to Dashboard</button>
 </a>
 
 </body>

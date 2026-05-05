@@ -171,7 +171,7 @@ def add_transaction():
     return redirect("/transactions")
 
 
-@app.route("/delete_transaction/<int:transaction_id>")
+@app.route("/delete_transaction/<int:transaction_id>", methods=["POST"])
 def delete_transaction_route(transaction_id):
     if "user_id" not in session:
         return redirect("/login")
